@@ -1,0 +1,121 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX spellcheck = en_US
+
+\documentclass[
+	graybox,
+	vecphys] % vectors bold face italic (vec command)
+	{svmult}
+
+\usepackage{type1cm}        % activate if the above 3 fonts are
+                            % not available on your system
+%
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+                             
+\graphicspath{{./figures/}}
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+
+%%% custom commands
+\newcommand{\bm}[1]{\boldsymbol{#1}}
+\newcommand{\ks}[1]{{(\mathrm{CS})}_{#1}}
+\newcommand{\ortvek}[4]{{ }_{(#1)}{\boldsymbol{#2}}^{#3}_{#4} }
+\newcommand{\vek}[3]{\boldsymbol{#1}^{#2}_{#3}}
+\newcommand{\trmat}[2]{{{ }^{#1}\boldsymbol{T}}_{#2}}
+\newcommand{\rotmat}[2]{{{ }^{#1}\boldsymbol{R}}_{#2}}
+\newcommand{\rotmato}[2]{{{ }^{#1}\boldsymbol{\overline{R}}}_{#2}}
+% Commands for symbol of the residual (full and reduced)
+\newcommand{\Res}[0]{\vec{\delta}}
+\newcommand{\ResR}[0]{\vec{\psi}}
+
+%%% custom packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts}
+\usepackage{paralist} % for compactitem
+\usepackage{siunitx}
+\usepackage{url}
+\usepackage{newtxtext}       % 
+\usepackage[varvw]{newtxmath}       % selects Times Roman as basic font
+\makeindex 
+
+\begin{document}
+
+\title*{Inverse Kinematics for Task-Redundancy of Symmetric 3T1R Parallel Manipulators using Tait-Bryan-Angle Kinematic Constraints}
+\author{Moritz Schappler}
+\institute{%
+Leibniz University Hannover, Institute of Mechatronic Systems. \email{moritz.schappler@imes.uni-hannover.de}. Code: \url{github.com/SchapplM/robotics-paper_ark2022_3T1R}.}
+
+%%% Provide shorter versions of title or author list if neceesary:
+ \titlerunning{Task-Redundant 3T1R Parallel Manipulators, Tait-Bryan-Angle Kinematics}
+ \authorrunning{M. Schappler}
+
+\maketitle
+\vspace{-2.5cm} % space above is reserved for author affiliations. Take the space since the one affiliation is on the footer
+\abstract{% 10-15 lines long
+abstract
+} 
+
+%%% Please provide a reasonable number of keywords:
+\keywords{Parallel robot, Parallel Manipulator, 3T1R, Task Redundancy, Kinematic constraints, Tait-Bryan angles, Euler angles, Dimensional synthesis.}
+
+\section{Introduction and State of the Art}
+\label{sec:introduction}
+
+fundamentals of structural synthesis \cite{Gogu2008,KongGos2007}
+
+symmetric parallel robots \cite{FangTsa2002,HuangLi2003}.
+
+task redundancy mainly used for PM with full mobility in pointing tasks ...
+
+new approach for kinematics model presented by author based on full kinematic constraints and Tait-Bryan angles for rotation beneficial for task redundancy \cite{SchapplerTapOrt2019}
+
+%To encounter the high modeling complexity for 3T2R PMs, the contributions of this paper are
+the paper's contributions are
+\begin{compactitem}
+\item a novel geometric model for the IKP of 3T1R PMs 
+\item a gradient-projection scheme for inverse kinematics in task redundancy
+\item exemplary application of the model in a combined structural and dimensional synthesis of symmetric 3T1R PM
+\end{compactitem}
+
+The remainder of the paper is structured as follows. Sect.~\ref{sec:model} ...
+Sect.~\ref{sec:taskred}
+The combined structural and dimensional synthesis discussed in Sect.~\ref{sec:synthesis}.
+The results of the synthesis are presented in Sect.~\ref{sec:results} and Sect.~\ref{sec:conclusion} concludes the paper.
+
+
+\section{Kinematic Model for 3T1R Parallel Robots}
+\label{sec:model}
+
+
+\section{Task Redundancy and Inverse Kinematics}
+\label{sec:taskred}
+
+
+
+\section{Combined Structural and Dimensional Synthesis of 3T1R PMs}
+\label{sec:synthesis}
+
+
+\section{Exemplary Results of the Combined Synthesis for 3T1R PMs}
+\label{sec:results}
+
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+conclusion
+
+
+\begin{acknowledgement}
+The author acknowledges the support by the Deutsche Forschungsgemeinschaft (DFG) under grant number 341489206. \textsc{Matlab} code to reproduce the results
+is available at GitHub under free license at \url{github.com/SchapplM/robotics-paper_ark2022_3T1R}.
+%
+\end{acknowledgement}
+
+\bibliographystyle{spmpsci}
+\bibliography{references}
+
+\end{document}
