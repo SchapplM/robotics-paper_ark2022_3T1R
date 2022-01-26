@@ -1,0 +1,102 @@
+%% Creator: Inkscape inkscape 0.92.4, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'optimization_flowchart_taskred.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{331.65354331bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.33333333)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0.01367625,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Requirements,\end{tabular}}}}%
+    \put(0.25795308,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}PSO: parameter variation,\end{tabular}}}}%
+    \put(0.25930436,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}stopping criteria, Pareto\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{optimization_flowchart_taskred.pdf}}%
+    \put(0.01453774,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}initialisation\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{optimization_flowchart_taskred.pdf}}%
+    \put(0.63318336,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Fitness fcn.: model update, \end{tabular}}}}%
+    \put(0.63318336,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}constraints, objective fcn.\end{tabular}}}}%
+    \put(0.57614309,0.22912142){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}$\bm{p}$\end{tabular}}}}%
+    \put(0.55475699,0.29430162){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}$\bm{f}(\bm{p})$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{optimization_flowchart_taskred.pdf}}%
+    \put(0.02440315,0.09071687){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Pos. IK\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{optimization_flowchart_taskred.pdf}}%
+    \put(0.28904302,0.1516409){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Repeat for IK configs.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{optimization_flowchart_taskred.pdf}}%
+    \put(0.86138789,0.13305608){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Return best\end{tabular}}}}%
+    \put(0.8616632,0.05277635){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}penalty $\bm{f}$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{optimization_flowchart_taskred.pdf}}%
+    \put(0.85160028,0.09114){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}objective or\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{optimization_flowchart_taskred.pdf}}%
+    \put(0.03348372,0.15217548){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Start\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{optimization_flowchart_taskred.pdf}}%
+    \put(0.7026064,0.12917873){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}All IK\end{tabular}}}}%
+    \put(0.70068068,0.09545903){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}configs.\end{tabular}}}}%
+    \put(0.29462194,0.11257351){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{ok}\end{tabular}}}}%
+    \put(0.65035371,0.11413249){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{ok}\end{tabular}}}}%
+    \put(0.17095595,0.1387957){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{fail}\end{tabular}}}}%
+    \put(0.70669193,0.0593288){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}done?\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{optimization_flowchart_taskred.pdf}}%
+    \put(0.74896415,0.1612539){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{no}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{optimization_flowchart_taskred.pdf}}%
+    \put(0.35301165,0.09176498){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Traj. IK\end{tabular}}}}%
+    \put(0.0015101,0.00955363){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}``improvable'': repeat IK with different criterion $h$ according to constraint violation and objective\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{optimization_flowchart_taskred.pdf}}%
+    \put(0.78975071,0.1099807){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{yes}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{optimization_flowchart_taskred.pdf}}%
+    \put(0.17331523,0.10925444){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}constraints\end{tabular}}}}%
+    \put(0.19751089,0.07624452){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}status?\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{optimization_flowchart_taskred.pdf}}%
+    \put(0.51635336,0.11200565){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}constraints\end{tabular}}}}%
+    \put(0.53602623,0.07899574){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}status?\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{optimization_flowchart_taskred.pdf}}%
+    \put(0.58608389,0.14974772){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{fail}\end{tabular}}}}%
+    \put(0.08882711,0.05709391){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{improvable}\end{tabular}}}}%
+    \put(0.41581878,0.05709391){\color[rgb]{0.58823529,0.58823529,0.58823529}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\small{improvable}\end{tabular}}}}%
+  \end{picture}%
+\endgroup%
