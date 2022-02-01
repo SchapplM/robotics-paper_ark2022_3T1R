@@ -4,9 +4,9 @@
 % Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2022-01
 % (C) Institut für Mechatronische Systeme, Leibniz Universität Hannover
 
-function datadir = ark_dimsynth_data_dir()
+function datadir = ark2022_3T1R_dimsynth_data_dir()
 %% Option 1: Stored result from the paper repository
-repopath = fileparts(which('ark_dimsynth_data_dir.m'));
+repopath = fileparts(which('ark2022_3T1R_dimsynth_data_dir.m'));
 datadir = fullfile(repopath, 'data', 'synthesis');
 %% Option 2: Results directory from the synthesis toolbox
 % dimsynthpath = fileparts(which('structgeomsynth_path_init.m'));
@@ -15,7 +15,7 @@ datadir = fullfile(repopath, 'data', 'synthesis');
 % adapted depending on Linux/Windows computers
 % Linux:
 % datadir = ['/home/moritz/SeaDrive/Für mich freigegeben/imes-projekt-', ...
-%   'dfg_robotersynthese/06_Publikationen/2022_ARK_3T2R_PKM/Simulationsdaten'];
+%   'dfg_robotersynthese/06_Publikationen/2022_ARK_3T1R/Simulationsergebnisse'];
 % Windows:
 %   datadir = ['P:\Für mich freigegeben\imes-projekt-dfg_robotersynthese\', ...
 %     '06_Publikationen\2022_ARK_3T2R_PKM\Simulationsdaten'];

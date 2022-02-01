@@ -64,18 +64,18 @@
     \put(0.74711817,-0.00047411){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}4-{\`R}\underline{P}{\`R}{\'R}{\'R} (RPUR)\end{tabular}}}}%
     \put(0.41244059,-0.00047411){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}4-\underline{\`P}{\`R}{\`R}{\'R}{\'R} (PRUR)\end{tabular}}}}%
     \put(0.02206249,0.07218387){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}\end{tabular}}}}%
-    \put(0.09808278,0.0916948){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\underline{\'R}\end{tabular}}}}%
+    \put(0.09808278,0.0824919){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\underline{\'R}\end{tabular}}}}%
     \put(0.0389121,0.16465954){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\'R}\end{tabular}}}}%
     \put(0.0789297,0.22544826){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\'R}\end{tabular}}}}%
     \put(0.11078292,0.24200569){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}\end{tabular}}}}%
     \put(0.34303123,0.07345346){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\underline{\`P}\end{tabular}}}}%
     \put(0.34553431,0.10965993){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}\end{tabular}}}}%
-    \put(0.46719538,0.05495629){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}{\'R} (U)\end{tabular}}}}%
+    \put(0.46719538,0.05035484){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}{\'R} (U)\end{tabular}}}}%
     \put(0.40222375,0.23873974){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\'R}\end{tabular}}}}%
     \put(0.64904707,0.04071516){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}\end{tabular}}}}%
     \put(0.65813613,0.12302315){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\underline{P}\end{tabular}}}}%
     \put(0.63251428,0.18954991){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\`R}{\'R} (U)\end{tabular}}}}%
-    \put(0.84502773,0.14841726){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\'R}\end{tabular}}}}%
+    \put(0.84502773,0.13921436){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}{\'R}\end{tabular}}}}%
     \put(0.60821028,0.24686463){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Trajectory\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{robots.pdf}}%
     \put(0.78689069,0.06802998){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}fixed base\end{tabular}}}}%

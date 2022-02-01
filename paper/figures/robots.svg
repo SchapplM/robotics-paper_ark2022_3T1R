@@ -398,9 +398,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="270.48682"
-     inkscape:cy="36.369016"
+     inkscape:zoom="2.8"
+     inkscape:cx="175.19005"
+     inkscape:cy="56.523292"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -431,13 +431,13 @@
     <image
        sodipodi:absref="/mnt/FP500/IMES/REPO/dok/paper-ark-2022-3T1R/paper/figures/RobotFig_PlotNum2_RobGroup2_P4PRRRR4V1G_r864.png"
        xlink:href="RobotFig_PlotNum2_RobGroup2_P4PRRRR4V1G_r864.png"
-       width="91.957092"
-       height="91.386452"
-       preserveAspectRatio="none"
-       style="image-rendering:optimizeQuality"
-       id="image969"
+       y="947.21942"
        x="154.82782"
-       y="947.21942" />
+       id="image969"
+       style="image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="91.386452"
+       width="91.957092" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:37.49999619px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9374997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -505,27 +505,27 @@
          y="1171.2378"
          style="font-size:2.49999976px;stroke-width:0.93749988px">\textbf{(e)}</tspan></text>
     <image
-       sodipodi:absref="/mnt/FP500/IMES/REPO/dok/paper-ark-2022-3T1R/paper/figures/RobotFig_PlotNum17_RobGroup17_P4RRRRR7G_r864.png"
-       xlink:href="RobotFig_PlotNum17_RobGroup17_P4RRRRR7G_r864.png"
-       transform="translate(34.486598,-8.7053549)"
-       clip-path="url(#clipPath1027)"
-       width="148.03798"
-       height="92.724297"
-       preserveAspectRatio="none"
-       style="image-rendering:optimizeQuality"
-       id="image991"
+       sodipodi:absref="/mnt/FP500/IMES/REPO/dok/paper-ark-2022-3T1R/paper/figures/RobotFig_PlotNum22_RobGroup22_P4RRRRR7G_r864.png"
+       xlink:href="RobotFig_PlotNum22_RobGroup22_P4RRRRR7G_r864.png"
+       y="956.68982"
        x="-32.033897"
-       y="956.68982" />
+       id="image991"
+       style="image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="92.724297"
+       width="148.03798"
+       clip-path="url(#clipPath1027)"
+       transform="translate(34.486598,-8.7053549)" />
     <image
        sodipodi:absref="/mnt/FP500/IMES/REPO/dok/paper-ark-2022-3T1R/paper/figures/RobotFig_PlotNum12_RobGroup12_P4RPRRR8V1G_r864.png"
        xlink:href="RobotFig_PlotNum12_RobGroup12_P4RPRRR8V1G_r864.png"
-       width="129.68747"
-       height="83.124977"
-       preserveAspectRatio="none"
-       style="image-rendering:optimizeQuality"
-       id="image1138"
+       y="958.04156"
        x="273.72821"
-       y="958.04156" />
+       id="image1138"
+       style="image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="83.124977"
+       width="129.68747" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:37.49999237px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.93749964px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -563,12 +563,12 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:37.49999237px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.93749964px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="39.966793"
-       y="1014.9984"
+       y="1018.7484"
        id="text970-3-3-6-9-1"><tspan
          sodipodi:role="line"
          id="tspan968-6-5-2-1-2"
          x="39.966793"
-         y="1014.9984"
+         y="1018.7484"
          style="font-size:2.49999976px;stroke-width:0.93749964px">\underline{\'R}</tspan></text>
     <text
        xml:space="preserve"
@@ -629,12 +629,12 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:37.49998856px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.93749952px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="190.37288"
-       y="1029.9686"
+       y="1031.8436"
        id="text970-3-3-6-9-5-5-7"><tspan
          sodipodi:role="line"
          id="tspan968-6-5-2-1-3-6-9"
          x="190.37288"
-         y="1029.9686"
+         y="1031.8436"
          style="font-size:2.49999976px;stroke-width:0.93749952px">{\`R}{\'R} (U)</tspan></text>
     <text
        xml:space="preserve"
@@ -684,12 +684,12 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:37.49998856px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.93749958px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="344.33209"
-       y="991.88513"
+       y="995.63513"
        id="text970-3-3-6-9-5-28"><tspan
          sodipodi:role="line"
          id="tspan968-6-5-2-1-3-9"
          x="344.33209"
-         y="991.88513"
+         y="995.63513"
          style="font-size:2.49999976px;stroke-width:0.93749958px">{\'R}</tspan></text>
     <text
        xml:space="preserve"

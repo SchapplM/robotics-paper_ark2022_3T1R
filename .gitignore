@@ -37,3 +37,4 @@ Thumbs.db
 *.mat
 *.orig
 ark2022_3T1R_dimsynth_data_dir.m
+data/*
