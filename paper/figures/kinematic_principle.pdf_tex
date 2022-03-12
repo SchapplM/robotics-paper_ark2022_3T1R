@@ -96,14 +96,14 @@
     \put(0,0){\includegraphics[width=\unitlength,page=18]{kinematic_principle.pdf}}%
     \put(0.80668383,0.04477887){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{0}{A_i}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=19]{kinematic_principle.pdf}}%
-    \put(0.44971305,0.00718317){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{0}{A_1}$\end{tabular}}}}%
+    \put(0.45423584,0.00718317){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{0}{A_1}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=20]{kinematic_principle.pdf}}%
     \put(0.55407883,0.07084824){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{0}{D}(\bm{x})$\end{tabular}}}}%
     \put(0.31559403,0.26143884){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{C_1}{B1}{:=}\bm{I}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=21]{kinematic_principle.pdf}}%
     \put(0.42064919,0.28717391){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{B_1}{E}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=22]{kinematic_principle.pdf}}%
-    \put(0.47012938,0.15712875){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{D}{E_1}$\end{tabular}}}}%
+    \put(0.46560659,0.15260596){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{D}{E_1}$\end{tabular}}}}%
     \put(0.53686117,0.18717362){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\Res_1$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=23]{kinematic_principle.pdf}}%
     \put(0.01907022,0.00114818){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{(a)}\end{tabular}}}}%
@@ -111,5 +111,9 @@
     \put(0,0){\includegraphics[width=\unitlength,page=24]{kinematic_principle.pdf}}%
     \put(0.38441531,0.15977521){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\trmat{A_1}{C_1}$\end{tabular}}}}%
     \put(0.40155316,0.13114128){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$(\bm{q}_1)$\end{tabular}}}}%
+    \put(0.29470754,0.09116507){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\`R\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{kinematic_principle.pdf}}%
+    \put(0.21312802,0.18211905){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\'R\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{kinematic_principle.pdf}}%
   \end{picture}%
 \endgroup%

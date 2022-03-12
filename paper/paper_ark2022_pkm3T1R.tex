@@ -6,13 +6,8 @@
 	vecphys] % vectors bold face italic (vec command)
 	{svmult}
 
-\usepackage{type1cm}        % activate if the above 3 fonts are
-                            % not available on your system
-%
-\usepackage{makeidx}         % allows index generation
-\usepackage{graphicx}        % standard LaTeX graphics tool
-                             % when including figure files
-                             
+\usepackage{makeidx} % allows index generation
+\usepackage{graphicx}
 \graphicspath{{./figures/}}
 \usepackage{multicol}        % used for the two-column index
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
@@ -37,45 +32,42 @@
 \usepackage{paralist} % for compactitem
 \usepackage{siunitx}
 \usepackage{url}
-\usepackage{newtxtext}       % 
-\usepackage[varvw]{newtxmath}       % selects Times Roman as basic font
+\usepackage{newtxtext}
+\usepackage[varvw]{newtxmath} % selects Times Roman as basic font
 \makeindex 
 
 \begin{document}
 
-\title*{Inverse Kinematics for Task Redundancy of Symmetric 3T1R Parallel Manipulators using Tait-Bryan-Angle Kinematic Constraints}
+\title*{Inverse Kinematics for Functional Redundancy of Symmetric 3T1R Parallel Manipulators using Tait-Bryan-Angle Kinematic Constraints}
 \author{Moritz Schappler}
 \institute{%
 Leibniz University Hannover, Institute of Mechatronic Systems. \email{moritz.schappler@imes.uni-hannover.de}. Code: \url{github.com/SchapplM/robotics-paper_ark2022_3T1R}.}
 
-%%% Provide shorter versions of title or author list if neceesary:
- \titlerunning{Task-Redundant 3T1R Parallel Manipulators, Tait-Bryan-Angle Kinematics}
- \authorrunning{M. Schappler}
+\titlerunning{Functionally Redundant 3T1R Parallel Manipulators, Tait-Bryan-Angle Kinematics}
+\authorrunning{M. Schappler}
 
 \maketitle
 \vspace{-2.5cm} % space above is reserved for author affiliations. Take the space since the one affiliation is on the footer
 \abstract{% 10-15 lines long
-Task redundancy for parallel manipulators (PM) with 3T1R degrees of freedom (DoF) presents a niche in the systematic kinematic description, not handled explicitly yet. % of PMs of differe, i.e. spatial motion and planar rotation, has not been investigated so far.
-For an efficient formulation of the inverse kinematics problem (IKP) an existing approach using intrinsic $Z$-$Y$-$X$ Tait-Bryan angles for the rotational kinematic constraints is transferred from 3T3R PMs to 3T1R PMs.
+Functional redundancy for parallel manipulators (PM) with 3T1R degrees of freedom (DoF) presents an untreated niche regarding a general and systematic kinematic description.
+For an efficient formulation of the inverse kinematics problem (IKP) an existing approach using intrinsic $Z$-$Y'$-$X''$ Tait-Bryan angles for the rotational kinematic constraints is transferred from 3T3R PMs to 3T1R PMs.
 The adaption of the kinematics model for the five-DoF leg chains of symmetric 3T1R PMs is elaborated in detail.
-The presented application in a Newton-Raphson IK scheme with nullspace projection is validated within a dimensional synthesis of such PMs, already exploiting the task redundancy.
+The presented application in a Newton-Raphson IK scheme with nullspace projection is validated within a dimensional synthesis of such PMs, already exploiting the redundancy.
 The framework is able to reproduce existing PMs from literature.
 Results show the dimensioning of PMs for an exemplary task.
-} 
-
-%%% Please provide a reasonable number of keywords:
-\keywords{Parallel robot, Parallel Manipulator, 3T1R, Task Redundancy, Kinematic constraints, Tait-Bryan angles, Euler angles, Dimensional synthesis.}
+}
+\keywords{Parallel robot, Parallel manipulator, 3T1R, Functional redundancy, Kinematic constraints, Tait-Bryan angles, Euler angles, Dimensional synthesis.}
 
 \section{Introduction and State of the Art}
 \label{sec:introduction}
 
-Many parallel robot structures for different degrees of freedom (DoF) of the moving platform already exist \cite{Merlet2006}.
+Many parallel robot structures for different degrees of freedom (DoF) of the moving platform already exist \cite{Merlet2006,KongGos2007,Gogu2008}.
 %
 While some few parallel manipulators (PM) are commercialized for motion with three translational DoF and fixed rotation (3T0R), such as the \emph{Delta robot}, structures for the Schoenflies motion with one rotational DoF (3T1R) are less common.
-Industrially used parallel robots mainly have symmetric leg chains with motors fixed to the robot base, as this reduces costs and complexity.
+Industrially used parallel robots mainly have symmetric leg chains with motors fixed to the robot base, as this reduces costs and complexity \cite{PierrotNabComKru2009}.
 One seeming example of a commercial 3T1R PM is the \emph{Adept Quattro robot}, which has four kinematic leg chains.
 However, kinematically the robot is a 3T0R PM. 
-The rotational DoF is transmitted via a gear and toothbelt mechanism over the fourth leg chain  \cite{XG_Quattro}.
+The rotational DoF is transmitted via an articulated traveling plate over the fourth leg chain \cite{PierrotNabComKru2009}.
 Therefore it can be classified as a parallel-hybrid structure.
 
 The \emph{structural synthesis} of PMs with symmetric leg chains was introduced in  \cite{FangTsa2002} by using screw theory for 4-DoF and 5-DoF PMs, which results in several general rules regarding the properties of leg chains.
@@ -96,10 +88,10 @@ A major performance criterion for parallel robots is the absence of singularitie
 A good conditioning can be accomplished by a well-chosen structural design, such as for isotropic PMs \cite{Carricato2005,Gogu2008}, where each actuator is dedicated to one platform DoF.
 Another mean to avoid singularities is the use of redundant DoF.
 The \emph{intrinsic redundancy} reviewed in \cite{GosselinSch2018} requires additional joints in at least one leg chain (\emph{kinematic redundancy}) or additional leg chains or actuators (\emph{actuation redundancy}).
-Exploiting functional or \emph{task redundancy} allows to use a DoF of the PM's operational space that is not used in the task space \cite{CorinaldiAngCal2016}.
+Exploiting the \emph{functional redundancy} allows to use a DoF of the PM's operational space -- unused in the task space -- for optimization \cite{CorinaldiAngCal2016}.
 %For serial-link robots this definition of task redundancy can be regarded as a sub-category of kinematic redundancy.
 
-Some \emph{optimization schemes} for task redundancy have been investigated, such as
+\emph{Optimization schemes} for functional redundancy have been investigated, such as
 \begin{compactitem}
 \item interval analysis in \cite{MerletPerDan2000} for a Gough platform (6-U\underline{P}S Hexapod robot\footnote{The parallel robot notation from \cite{Merlet2006} is used with prepended number of legs, chains with universal (U), revolute (R), prismatic (P) and spherical (S) joint and underlining for actuation.}), 
 \item linear and quadratic programming in \cite{OenWan2007}, also for a Hexapod robot,
@@ -107,9 +99,9 @@ Some \emph{optimization schemes} for task redundancy have been investigated, suc
 \item the gradient-projection method on position level for general 3T3R PMs in \cite{SchapplerTapOrt2019} and on accerelation level in \cite{AgarwalNasBan2016} for a 3-\underline{R}RR and in \cite{SchapplerOrt2021} for a 6-U\underline{P}S robot.
 \end{compactitem}
 
-Several approaches exist for serial-link robots to formulate the inverse kinematics problem (IKP) properly for task redundancy \cite{ReiterMueGat2018}.
+Several approaches exist for serial-link robots to formulate the inverse kinematics problem (IKP) properly for functional redundancy \cite{ReiterMueGat2018}.
 The problem can be addressed straightforward for first- or second-order differential kinematics (on velocity or acceleration level) by using the linear Jacobian relation.
-This can be transferred to parallel robots as shown for kinematic redundancy in \cite{GosselinSch2018} or explicitly for task redundancy by \cite{AgarwalNasBan2016}.
+This can be transferred to parallel robots as shown for kinematic redundancy in \cite{GosselinSch2018} or explicitly for functional redundancy by \cite{AgarwalNasBan2016}.
 The position-level IKP has to be handled differently due to the nonlinearity of rotation \cite{SchapplerTapOrt2019}.
 %The redundant coordinate (rotation angle of the platform) is present in the common derivation of the IKP \cite{Merlet2006}.
 For the \emph{explicit} IKP the substitution of the redundant coordinate is necessary for global optimization schemes, such as \cite{MerletPerDan2000}.
@@ -119,29 +111,15 @@ This can be combined with the \emph{nullspace-projection method} and allows a lo
 It can also be used for kinematic redundancy, as shown by \cite{SantosSil2017} for a 3-\underline{PR}RR planar robot in combination with differential dynamic programming.
 The kinematics formulation has to be handled differently than non-redundant approaches \cite{Merlet2006} to be able to exclude the redundant coordinate from the equations \cite{SchapplerTapOrt2019}.
 
-%Synthesis of parallel manipulators provides extensive possibilities for funamental research
-
-%fundamentals of structural synthesis \cite{Gogu2008,KongGos2007}
-
-%symmetric parallel robots \cite{FangTsa2002,HuangLi2003}.
-
-%TODO: discussion on how the redundancy can be useful at all for 3T1R PMs. Why not use 3T0R directly? Optimization of performance criteria such as singularity, collision avoidance etc. would improve the situation?
-%3-leg PKM would have less affinity to collision? 
-%Is the workspace smaller for 4 legs instead of 3 legs?
-%This question can not be answered in advance, but has to be answered by combined structural and dimensional synthesis!
-%If the task requires a fixed orientation, then a revolute joint at the platform is necessary (parallel-hybrid) and the approach makes less sense.
-%Area of application: Pick+Place processes with arbitrary rotation, i.e. task redundancy. E.g. by vacuum gripper with only one suction cup.
-%Or planar drilling tool task
-
 The presented references on parallel robot redundancy mainly focus on general spatial manipulators, i.e. 3T3R PMs for 3T2R tasks \cite{MerletPerDan2000,OenWan2007,CorinaldiAngCal2016,SchapplerTapOrt2019} or planar manipulators \cite{AgarwalNasBan2016}, i.e. 2T1R PMs for 2T0R tasks.
-Task redundancy for 3T1R PMs %with spatial translation and planar rotation (3T1R DoF, Schoenflies motion) 
+Functional redundancy for 3T1R PMs %with spatial translation and planar rotation (3T1R DoF, Schoenflies motion) 
 has not been investigated yet, to the best knowledge of the author.
-A practical use for task-redundant 3T1R PMs is not obvious, but can be motivated from axis-symmetric pick-and-place tasks, e.g. when picking parts with arbitrary rotation or with an interval of tolerance for orientation.
+A practical use for functionally redundant 3T1R PMs is not obvious, but can be motivated from axis-symmetric pick-and-place tasks, e.g. when picking parts with arbitrary rotation or with an interval of tolerance for orientation.
 A technical realization of the robot end effector is e.g. a vacuum gripper with one suction cup.
 Another possible application are drilling tasks in three-axis-machining or in five-axis machining using a two-DoF table orientation mechanism, similar to \cite{CorinaldiAngCal2016}.
 Despite the lack of obtruding specific use cases, the sketched problem may be interesting from an academic point of view. % regarding general findings on kinematic modeling and robot synthesis.
 
-Using task-redundant 3T1R PMs with four leg chains instead of 3T0R PMs with three leg chains has the disadvantage of in principle smaller workspace due to additional constraints and more possible self-collisions.
+Using functionally redundant 3T1R PMs with four leg chains instead of 3T0R PMs with three leg chains has the disadvantage of in principle smaller workspace due to additional constraints and more possible self-collisions.
 Using the task redundancy for singularity and collision avoidance may on the contrary abolish these disadvantages.
 This may also be beneficial for isotropic PMs of \cite{Carricato2005,Gogu2008} when nullspace optimization for collision avoidance enlarges the workspace.
 In the following, an axis-symmetric 3T0R task is denoted by 3T0*R to distinguish it from fixed-orientation tasks termed with 3T0R.
@@ -149,10 +127,8 @@ In the latter case e.g. an additional revolute joint at the platform is necessar
 %This parallel-hybrid machine probably is less beneficial.
 
 The performance of the discussed alternatives can be estimated with a \emph{combined structural and dimensional synthesis}, where all possible structures are simulated for the tasks and their kinematic parameters are each optimized. %, if a custom solution is considered.
-The task redundancy has to be exploited already in the dimensional synthesis to be able to take it's potential into account.
+The functional redundancy has to be exploited already in the dimensional synthesis to take it's potential into account.
 To be able to compare numerous different solutions, a \emph{general inverse kinematics model} is necessary.
-%Since spatial PMs mainly rely on 5-DoF leg chains, an analytic solution to the IKP such as for simple structures like 6-U\underline{P}S or 3-\underline{R}RR may not be available, making the numeric Newton-Raphson algorithm favorable.
-%Therefore, using the numeric Newton-Raphson algorithm is promising.
 
 These aspects are adressed for 3T1R PMs in this paper by adapting a kinematics model presented previously by the author based on full kinematic constraints and Tait-Bryan angles for rotation \cite{SchapplerTapOrt2019}.
 %
@@ -160,40 +136,37 @@ The paper's contributions are
 \begin{compactitem}
 \item a novel geometric model for the IKP of task-redundant 3T1R PMs, 
 \item application of the model in a gradient-projection scheme for task redundancy,
-%\item a framework for the combined structural and dimensional synthesis of task-redundant 3T1R PMs.
 \item validation of the model in a dimensional synthesis framework.
 \end{compactitem}
 
-%The remainder of the paper is structured as follows. Sect.~\ref{sec:model} presents the kinematics model adapted to 3T1R PM.
-%Sect.~\ref{sec:taskred} applies this in the IK scheme using gradient projection.
-%The combined structural and dimensional synthesis framework is discussed in Sect.~\ref{sec:synthesis}.
-%The results of the synthesis are presented for a minimal example in Sect.~\ref{sec:results} and Sect.~\ref{sec:conclusion} concludes the paper.
 The remainder of the paper is structured as follows. Sect.~\ref{sec:model} presents the kinematics model which is applied in 
 Sect.~\ref{sec:taskred} for the IK scheme.
-The model is used in the synthesis framework, with results presented in Sect.~\ref{sec:synthesis} and 
-Sect.~\ref{sec:conclusion} concludes the paper.
+The model is used in the synthesis framework, with results presented in Sect.~\ref{sec:synthesis}.
+Section~\ref{sec:conclusion} concludes the paper.
 
-
+\vspace{-0.3cm}
 \section{Inverse Kinematic Model for 3T1R Parallel Robots}
 \label{sec:model}
 
 A fully-parallel robot with 3T1R platform mobility is considered.
 The robot has $m=4$ leg chains and $n=4$ platform DoF.
 It's operational-space coordinates $\vec{x}^\transp=[r_x,r_y,r_z,\varphi_z]$ contain the position $\vec{r}$ and planar orientation $\varphi_z$ of the platform-mounted end effector. % $\ortvek{0}{r}{}{D}$  and the platform rotation $\varphi_z$
-Leg chains are assumed to have $n_i=5$ DoF each. % since six-DoF leg chains do not constrain the platform motion and four-DoF chains do not allow a symmetric PM.
-
+Leg chains are assumed to have $n_i=5$ DoF each since six-DoF leg chains provide no constraint and four-DoF chains do not allow a symmetric PM.
+%
 The kinematic model is assisted by several frames, based on the model in \cite{BriotKha2015}.
+
 Leg chains are modeled with the modified Denavit-Hartenberg parameters \cite{BriotKha2015} and the legs' kinematics can be used modularly to obtain the parallel robot kinematics.
 
 \begin{figure}[tb]
+\vspace{-0.1cm}
 \input{./figures/kinematic_principle.pdf_tex}
-\caption{Sketch of the kinematics model at the example of the modified 4-\underline{\`R}\`R\`R\'R\'R image of \cite{KongGos2007} (p.\,155). All coordinate frames (\textbf{a}), constraints for first leg chain (\textbf{b}) and other leg chains $i{\ne}1$ (\textbf{c})}
+\caption{Sketch of the kinematics model at the example of the modified 4-\underline{\`R}\`R\`R\'R\'R image of \cite{KongGos2007} (p.\,155). (\textbf{a}) All coordinate frames, (\textbf{b}) constraints for first leg chain and (\textbf{c}) other leg chains $i{\ne}1$. Joints with the same accent on \`R or \'R are parallel to each other \cite{KongGos2007}, extending the notation of \cite{Merlet2006}}
 \label{fig:kinematic_principle}
 \vspace{-0.2cm}
 \end{figure}
 
 
-The coordinate systems $\ks{}$ are sketched in Fig.~\ref{fig:kinematic_principle},a.
+The coordinate systems $\ks{}$ are sketched in Fig.~\ref{fig:kinematic_principle}a.
 The world frame $\ks{W}$ serves as a reference for the relative position of task and robot, which has a base frame $\ks{0}$.
 The legs are connected to the fixed base with a base joint coupling frame $\ks{A_i}$ and to the moving platform with a coupling joint frame $\ks{B_i}$.
 A corresponding cut joint frame $\ks{C_i}$ is attached to the leg.
@@ -232,9 +205,9 @@ $\Res_{\mathrm{r},1}
 \begin{bmatrix}
 \alpha_{z,1} & \alpha_{y,1} & \alpha_{x,1}
 \end{bmatrix}^\transp$ 
-for the first leg chain $i=1$ is obtained from the corresponding rotation matrix $\rotmat{D}{E_1}$ to (\ref{eq:phi_trans}) as
+for the first leg chain $i=1$ is obtained from the rotation matrix $\rotmat{D}{E_1}$ corresponding to (\ref{eq:phi_trans}) as
 %
-\vspace{-0.1cm}
+\vspace{-0.2cm}
 \begin{equation}
 \Res_{\mathrm{r},1}(\vec{q}_1,\vec{x})
 =
@@ -248,10 +221,11 @@ for the first leg chain $i=1$ is obtained from the corresponding rotation matrix
 \vspace{-0.1cm}
 \end{equation}
 %
-with the function $\bm{\alpha}(\bm{R})$, which computes the intrinsic $Z$-$Y$-$X$ Tait-Bryan angles $[\alpha_z,\alpha_y,\alpha_x]$ from a given rotation matrix.
-The approach for the first leg chain is depicted in Fig.~\ref{eq:fkine_leg},b.
+with the function $\bm{\alpha}(\bm{R})$, which computes the intrinsic $Z$-$Y'$-$X''$ Tait-Bryan angles $[\alpha_z,\alpha_y,\alpha_x]$ from a given rotation matrix.
+Proper Euler angles like $Z$-$Y'$-$Z''$ are infeasible due to the singularity for an angle of zero.
+The approach for the first leg chain is depicted in Fig.~\ref{eq:fkine_leg}b.
 %
-For the following leg chains, as shown in Fig.~\ref{eq:fkine_leg},c, the rotational constraints
+For the following leg chains, as shown in Fig.~\ref{eq:fkine_leg}c, the rotational constraints
 $\Res_{\mathrm{r},i}
 =
 \begin{bmatrix}
@@ -292,21 +266,20 @@ Assembling the kinematic constraints for each leg chain leads to
 \label{eq:constr}
 \end{equation}
 %
-This formulation is designed for 3T3R PMs and is overconstraint for 3T1R PMs.
+This formulation is designed for 3T3R PMs and is overconstraint for 3T1R PMs since six constraint equations are defined for five leg joints in the considered case.
 However, it is feasible for providing a solution to the IKP. %, but does not provide a benefit regarding other approaches.
 %
-When considering the task-redundant case, the reason for the selection of the rotational constraints (\ref{eq:phi1_rot},\ref{eq:phi2_rot}) from \cite{SchapplerTapOrt2019} becomes apparent.
+When considering the functionally redundant case, the reason for the selection of the rotational constraints (\ref{eq:phi1_rot}), (\ref{eq:phi2_rot}) from \cite{SchapplerTapOrt2019} becomes apparent.
 The task space coordinates
 $\vec{y}
 =
 [r_x,r_y,r_z]^\transp
 $
-can be obtained by removing the platform rotation $\varphi_z$. %the row corresponding to . %  with the selection matrix $\vec{P}$.
+can be obtained by removing the platform rotation $\varphi_z$.
 Due to the order of rotations, the components $\alpha_{x,1}$ and $\alpha_{y,1}$ are independent of $\varphi_z$ \cite{SchapplerTapOrt2019}.
 The residual $\alpha_{z,1}$ corresponds to the removed coordinate and can be disregarded.
 Removing this term from the rotational constraint for the first leg chain of (\ref{eq:phi1_rot}) is termed as $\Res_{\mathrm{r},1,\mathrm{red}}$ and accordingly
 %
-\vspace{-0.1cm}
 \begin{equation}
 \Res_{1,\mathrm{red}}^\transp=[\Res_{\mathrm{t},1}^\transp, \Res_{\mathrm{r},1,\mathrm{red}}^\transp] \in \mathbb{R}^5
 \quad \mathrm{and} \quad
@@ -321,38 +294,31 @@ Removing this term from the rotational constraint for the first leg chain of (\r
 \vspace{-0.1cm}
 \label{equ:constr_red}
 \end{equation}
-% $$ and $$.
 
 \vspace{0.1cm} % Indices of line above go down too much
 Since the leg chain has $n_1=5$ DoF and the platform has 3T1R mobility, only one DoF of the leg chain remains for the pointing direction of the $z$ axis of $\ks{E_i}$.
-Therefore, for the task-redundant case, the \emph{translational} constraint for \emph{all} legs remains unchanged as $\vecResR_{\mathrm{t},i}:=\Res_{\mathrm{t},i}$.
-For the \emph{rotational} constraint $\ResR_{\mathrm{r},1}$ of the \emph{first} leg chain a function candidate has to be found which conforms with the uniqueness condition
+Therefore, for the \emph{functionally redundant case}, the \emph{translational} constraint for \emph{all} legs remains unchanged as $\vecResR_{\mathrm{t},i}:=\Res_{\mathrm{t},i}$.
+For the \emph{rotational} constraint $\ResR_{\mathrm{r},1}$ of the \emph{first} leg chain (unaffected by platform rotation) a function candidate has to be found 
+with
 %
 \vspace{-0.1cm}
 \begin{equation}
-	%\vecResR_{\mathrm{r},1}(\vec{q}_1^*,\vec{y})=0
-	% \quad \mathrm{iff} \quad % \vec{q}_1^* \enspace \enspace
-	% \Res_{\mathrm{r},1,\mathrm{red}}(\vec{q}_1^*,\vec{y})=\vec{0}
-	% \alpha_{x,1}(\vec{q}_1^*,\vec{y})=0 \land \alpha_{y,1}(\vec{q}_1^*,\vec{y})=0
 	\ResR_{\mathrm{r},1}(\vec{q}_1,\vec{y})=
 	\begin{cases}
-		0,& \text{iff} \enspace \Res_{\mathrm{r},1,\mathrm{red}}(\vec{q}_1,\vec{y})=\vec{0} \\
+		0,& \text{iff} \enspace \Res_{\mathrm{r},1,\mathrm{red}}(\vec{q}_1,\vec{y})=\vec{0} \quad \mathrm{(uniqueness~condition)} \\
 		\ne 0,              & \text{otherwise.}
 	\end{cases}
 	\vspace{-0.1cm}
 \end{equation}
 
-The 2-norm of $\Res_{\mathrm{r},1,\mathrm{red}}$ disqualifies since the gradient w.r.t. $\vec{q}_1$ becomes 0 when approaching $\Res_{\mathrm{r},1,\mathrm{red}}=0$.
+The 2-norm of 
+$\Res_{\mathrm{r},1,\mathrm{red}} {=} [
+\alpha_{y,1}, \alpha_{x,1}
+]^\transp$ 
+disqualifies since the gradient w.r.t. $\vec{q}_1$ becomes 0 when approaching $\Res_{\mathrm{r},1,\mathrm{red}}{=}0$.
 Instead, the constraint is selected as the 1-norm 
-%Using the 1-norm instead does not rely on a specific geometric derivation, but rather on requirements on the mathematical expressions.
-%Due to the simple implementation, the rotational constraint is selected as 
 
-%Another requirement is the differentiability for 
-%Other function candidates in (\ref{eq:constr_rot_red_lead}) and \ref{eq:constr_rot_red_follow}) than the absolute value function such as the 2-norm have the drawback of loss of differentiability for $\vecResR=0$, which is unfavorable.
-
-% and the rotational constraints for the leading leg chain can be selected as 
-%
-\vspace{-0.2cm}
+\vspace{-0.5cm}
 \begin{equation}
 \ResR_{\mathrm{r},1}(\vec{q}_1,\vec{y})
 =
@@ -361,15 +327,12 @@ Instead, the constraint is selected as the 1-norm
 0
 \in {\mathbb{R}}.
 \label{eq:constr_rot_red_lead}
-\vspace{-0.1cm}
 \end{equation}
 
 The rotational constraint $\vecResR_{\mathrm{r},i}$ for the \emph{following} leg chains also contains the $z$ component $\alpha_{z,i}$, since the leading leg 1 sets the platform orientation.
 Otherwise, it is constructed with the same considerations like (\ref{eq:constr_rot_red_lead}) as
 %
-%\vspace{-0.3cm}
 \begin{equation}
-%\quad \quad % push large brackets to the right to allow vertical squeezing
 \vecResR_{\mathrm{r},i}(\vec{q}_i,\vec{x})
 =
 \begin{bmatrix}
@@ -383,7 +346,6 @@ Otherwise, it is constructed with the same considerations like (\ref{eq:constr_r
 \label{eq:constr_rot_red_follow}
 \vspace{-0.1cm}
 \end{equation}
-
 
 The reduced constraints for the full robot are termed similar to (\ref{eq:constr}) as
 %
@@ -407,9 +369,6 @@ The reduced constraints for the full robot are termed similar to (\ref{eq:constr
 \end{equation}
 
 
-%This constraint does not rely on a specific geometric derivation, but rather on requirements on the mathematical expressions such as the uniqueness condition
-
-
 The efficient computation of the 
 % partial differentiation of the Tait-Bryan-angle constraints w.r.t. the joint coordinates $\vec{q}$ 
 terms $\vecResR_{\partial \vec{q}}{:=}\partial  \vecResR / \partial \vec{q}$ %and the task coordinates $\vec{y}$, 
@@ -417,7 +376,7 @@ and
 $\vecResR_{\partial \vec{y}}{:=}\partial \vecResR / \partial \vec{y}$,
 necessary for solving the IKP,
 is shown in \cite{SchapplerTapOrt2019}.
-The differentiation of the absolute value of these terms can be obtained by %  in (\ref{eq:constr_rot_red_lead}--\ref{eq:constr_rot_red_follow})
+The differentiation of the absolute value of these terms can be obtained by
 %
 \vspace{-0.1cm}
 \begin{equation}
@@ -445,18 +404,18 @@ Since the implementation is numeric, the inexactness of the signum function in (
 
 
 
-\section{Task Redundancy and Inverse Kinematics}
+\section{Functional Redundancy and Inverse Kinematics}
 \label{sec:taskred}
 
-The advantage of the proposed model of the previous section becomes apparent, when looking at the dimension in (\ref{eq:constr_red}) which leads for a task-redundant symmetric 3T1R PM to a fat ``direct kinematic matrix'' \cite{Gogu2008} $\vecResR_{\partial \bm{q}}$ of dimension $19 {\times} 20$.
+The advantage of the proposed model of the previous section becomes apparent, when looking at the dimension in (\ref{eq:constr_red}) which leads for a functionally redundant symmetric 3T1R PM to a fat ``direct kinematic matrix'' \cite{Gogu2008} $\vecResR_{\partial \bm{q}}$ of dimension $19 {\times} 20$.
 Using the velocity-level formulation of this matrix from the theory of linear transformations in \cite{Gogu2008} would in principle also reveal this kind of redundancy.
 Approaching the formulation on the position level as shown above however is beneficial regarding the generality of the reference frame of the components corresponding to the nullspace.
 The one-DoF nullspace of the matrix $\vecResR_{\partial \bm{q}}$, corresponding to  %the redundant operational space
 the coordinate $\varphi_z$, can be exploited while solving the IKP.
-Using the task redundancy in the overconstraint equations (\ref{equ:constr_red}) instead produces a tall $23 {\times} 20$ matrix not feasible for a numeric solution with the pseudo inverse.
+Using the task redundancy in the overconstraint equations (\ref{equ:constr_red}) instead produces a tall $23 {\times} 20$ matrix not feasible for a numeric solution with the pseudo inverse ($\dagger$).
 The inverse manipulator Jacobian $\vec{J}^{-1}$ can be obtained numerically by $\tilde{\vec{J}}^{-1}{=}{-} \Res_{\partial \bm{q}}^{\dagger} \Res_{\partial \bm{x}}$  and selecting rows corresponding to active joints. % where the overconstraint is removed numerically.
 
-The first-order IK algorithm on position-level is derived with a Taylor series expansion of (\ref{eq:constr_red}), leading to a step $k$ in the Newton-Raphson algorithm, by
+The first-order IK algorithm on position level is derived with a Taylor series expansion of (\ref{eq:constr_red}), leading to a step $k$ in the Newton-Raphson algorithm, by
 %
 \vspace{-0.2cm}
 \begin{equation}
@@ -469,7 +428,7 @@ The first-order IK algorithm on position-level is derived with a Taylor series e
 \vspace{-0.2cm}
 \end{equation}
 %
-The task-related increment is obtained using the pseudo inverse ($\dagger$) as 
+The task-related increment is obtained using the pseudo inverse as 
 %
 \vspace{-0.2cm}
 \begin{equation}
@@ -504,69 +463,28 @@ The formulation can also be set up on velocity level (first-order differential k
 \vspace{-0.4cm}
  %, which is omitted here for the sake of brevity.
 
-%velocity level first order
-%
-%\begin{equation}
-%\frac{\mathrm{d}}{{\mathrm{d}}t} \Res(\vec{q},\vec{x})
-%=
-%\Res_{\partial \vec{q}} \dot{\vec{q}}
-%+
-%\Res_{\partial \vec{x}} \dot{\vec{x}}
-%=
-%\bm{0}
-%\quad \mathrm{with} \quad
-%\Res_{\partial \vec{q}}{:=}\frac{\partial}{\partial \vec{q}} \Res \quad \mathrm{and} \quad \Res_{\partial \vec{x}}{:=}\frac{\partial}{\partial \vec{x}} \Res.
-%\label{eq:constr_grad}
-%\end{equation}
-%
-%
-%\begin{align}
-%\dot{\vec{q}}_{\mathrm{T}}=-\bm{\Psi}_{\partial \vec{q}}^{\#} \bm{\Psi}_{\partial \vec{y}}\dot{\vec{y}}
-%\end{align}
-%
-%acceleration level second order
-%
-%nullspace
-%
-%\begin{equation}
-%\ddot{\vec{q}}_{\mathrm{N}}=(\bm{I}_{n_{\vec{q}}}-\bm{\Psi}_{\partial \vec{q}}^{\#}\bm{\Psi}_{\partial \vec{q}}) \bm{v}_{\vec{q}}.
-%\label{eq:par_nullspace_fulljoint}
-%\end{equation}
-%
-%\begin{equation}
-%\ddot{\vec{q}}_{\mathrm{T}}=\tilde{\bm{J}}_{\vec{x}}^{-1}\ddot{\vec{x}}+\dot{\tilde{\bm{J}}}_{\vec{x}}^{-1}\dot{\vec{x}}.
-%\label{eq:par_ik_acc_opspace}
-%\end{equation}
 
-
-
-\section{Dimensional Synthesis of Task-Redundant 3T1R PMs}
+\section{Dimensional Synthesis of Functionally Redundant 3T1R PMs}
 \label{sec:synthesis}
 
 The generality of the proposed approach for the IK model of 3T1R PMs is validated with a combined structural and dimensional synthesis.
 Serial-kinematic leg chains with five joints are generated via permutation of the Denavit-Hartenberg parameters, similar to \cite{Gogu2008}. %  and isomorphism reduction
 A permutation of all possible symmetric alignments of these kinematic chains is performed regarding base and platform coupling joints \cite{Gogu2008,KongGos2007,Merlet2006,BriotKha2015}, presenting the \emph{structural synthesis}.
 Each combination is tested for a reference trajectory to evaluate the PM's mobility using the full model from (\ref{eq:constr}) for 3T1R task DoF.
-Kinematic parameters of the leg chains and the parallel alignment are optimized in a \emph{dimensional synthesis} to obtain a feasible solution for each robot (\emph{combined synthesis}), required for the numeric evaluation in contrast to symbolic schemes.
+Kinematic parameters $\bm{p}$ of the leg chains and the parallel alignment are optimized in a dimensional synthesis to obtain a feasible solution for each robot (\emph{combined synthesis}), required for the numeric evaluation in contrast to symbolic schemes.
 %Computation is performed on a state-of-the-art Intel Xeon computing cluster system, using a \textsc{Matlab} implementation.
 
 
-The reduced model (\ref{eq:constr_red}) is then used for a dimensional synthesis with 3T0*R task DoF, exploiting the task redundancy of the 3T1R PMs, as sketched in Fig.~\ref{fig:optimization_flowchart_taskred}.
+The reduced model (\ref{eq:constr_red}) is then used for a \emph{dimensional synthesis} with 3T0*R task DoF, exploiting the functional redundancy of the 3T1R PMs, as sketched in Fig.~\ref{fig:optimization_flowchart_taskred}.
 The proposed kinematic model is mainly used for finding an optimal initial configuration in the position IK.
 Thereby the following second-order trajectory IK starts in an equilibrium and then optimizes the same criterion, as shown in \cite{SchapplerOrt2021} in more detail.
 %The IK objective criterion $h$ of (\ref{equ:nullspace}) is selected according to the objective function of the dimensional synthesis (Jacobian condition number, installation space) and the constraints that are violated in a previous iteration (e.g. self collisions, joint limits).
 In this example, the kinematic objectives pursued in a Pareto optimization are Jacobian condition number, length of leg chains and installation space.
 Constraints are e.g. self collisions and joint limit violations.
 
-%The task is shown in Fig.~\ref{fig:task_perfmap},a together with one of the resulting robots, the 4-XXXXX.
-
-%The exemplary use of the task redundancy is shown in Fig.~\ref{fig:task_perfmap},b with a heatmap of the condition number over the redundant coordinate and the normalized trajectory progress.
-%The local optimization on acceleration level allows to avoid singular regions.
-%Initial values are found with the position-level algorithm from (\ref{equ:nullspace}).
-
-Examples for the resulting optimized 3T1R PMs and the trajectory are shown in Fig.~\ref{fig:results_all},a--c, proving the generality of the model by the variety of alignments.
+Examples for the resulting optimized 3T1R PMs and the trajectory are shown in Fig.~\ref{fig:results_all}a--c, proving the generality of the model by the variety of alignments.
 The notation for dashes on P and R joints to mark parallelism is adapted from \cite{KongGos2007}.
-The exploitation of the task redundancy is validated with a heatmap of the performance criterion $h{=}\mathrm{cond}(\vec{J})$ over the redundant coordinate $\varphi_z$ and the normalized trajectory progress $0 {\le} s {\le} 1$, shown in Fig.~\ref{fig:results_all},d--e for two different robots.
+The exploitation of the functional redundancy is validated with a heatmap of the performance criterion $h{=}\mathrm{cond}(\vec{J})$ over the redundant coordinate $\varphi_z$ and the trajectory progress, shown in Fig.~\ref{fig:results_all}d--e for two different robots.
 The local optimization is sufficient to let the trajectory (dashed line) avoid regions of high condition numbers (dark colors) and therefore of singularities of $\vecResR_{\partial \vec{q}}$ (Type I) and of $\vec{J}$ (Type II) or of collisions and range violations (with markers according to the legend).
 
 %The exemplary redundancy maps show that the optimal PMs for this task already give restrictions to the platform rotation.
@@ -585,14 +503,13 @@ The local optimization is sufficient to let the trajectory (dashed line) avoid r
 \input{./figures/robots.pdf_tex}
 \includegraphics{perfmap_1x2.pdf}
 \label{fig:results_all}
-\caption{Robots optimized for the 3T0*R task (\textbf{a}--\textbf{c}) and two exemplary redundancy maps (\textbf{d}--\textbf{e})}
+\caption{(\textbf{a}--\textbf{c}) Robots optimized for the 3T0*R task and  (\textbf{d}--\textbf{e}) two exemplary performance maps}
 \end{figure}
 
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-%1 \\ 2 \\ 3 \\ 4 \\ 5 \\ 6 \\ 7
 %A kinematics model is presented that solves the IKP for 3T1R PMs in the presence of task redundancy.
 %The generality of the approach is used in a dimensional synthesis of 3T1R PMs to obtain suitable kinematics parameters for a task-optimal PM.
 %Exemplary results show the necessity of exploiting the task redundancy to find a feasible solution within the synthesis.

@@ -1,4 +1,4 @@
-%% Creator: Inkscape inkscape 0.92.4, www.inkscape.org
+%% Creator: Inkscape inkscape 0.92.3, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
 %% Accompanies image file 'optimization_flowchart_taskred.pdf' (pdf, eps, ps)
 %%
@@ -54,24 +54,24 @@
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0.01367625,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Requirements,\end{tabular}}}}%
-    \put(0.25795308,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}PSO: parameter variation,\end{tabular}}}}%
-    \put(0.25930436,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}stopping criteria, Pareto\end{tabular}}}}%
+    \put(0.2443847,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}PSO: parameter ($\bm{p}$) variation,\end{tabular}}}}%
+    \put(0.24573598,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}stopping criteria, Pareto\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{optimization_flowchart_taskred.pdf}}%
     \put(0.01453774,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}initialisation\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{optimization_flowchart_taskred.pdf}}%
     \put(0.63318336,0.26542361){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Fitness fcn.: model update, \end{tabular}}}}%
     \put(0.63318336,0.23092141){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}constraints, objective fcn.\end{tabular}}}}%
     \put(0.57614309,0.22912142){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}$\bm{p}$\end{tabular}}}}%
-    \put(0.55475699,0.29430162){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}$\bm{f}(\bm{p})$\end{tabular}}}}%
+    \put(0.55923385,0.29915582){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}$\bm{f}(\bm{p})$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{optimization_flowchart_taskred.pdf}}%
     \put(0.02440315,0.09071687){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Pos. IK\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{optimization_flowchart_taskred.pdf}}%
     \put(0.28904302,0.1516409){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Repeat for IK configs.\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{optimization_flowchart_taskred.pdf}}%
-    \put(0.86138789,0.13305608){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Return best\end{tabular}}}}%
+    \put(0.86109638,0.13305608){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Return best\end{tabular}}}}%
     \put(0.8616632,0.05277635){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}penalty $\bm{f}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{optimization_flowchart_taskred.pdf}}%
-    \put(0.85160028,0.09114){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}objective or\end{tabular}}}}%
+    \put(0.86064587,0.09114){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}objective or\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{optimization_flowchart_taskred.pdf}}%
     \put(0.03348372,0.15217548){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Start\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=8]{optimization_flowchart_taskred.pdf}}%
