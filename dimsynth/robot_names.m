@@ -22,7 +22,8 @@
 
 clc
 clear
-
+usr_writemode = 'edit';
+usr_updatemode = 'skip';
 %% Definitionen
 outputdir = fileparts(which('robot_names.m'));
 datadir = fullfile(outputdir,'..','data');
@@ -38,12 +39,16 @@ tablepath = fullfile(datadir, 'results_all_reps_pareto.csv');
 ResTab = readtable(tablepath, 'ReadVariableNames', true);
 
 %% Generiere die Zeichenfolge für die Gelenkkette
+namestablepath = fullfile(datadir, 'robot_names_latex.csv');
 Robots = unique(ResTab.Name);
 ResTab_NameTrans = cell2table(cell(0,7), 'VariableNames', {'PKM_Name', ...
   'Gnum', 'Pnum', 'Chain_Name', 'ChainStructure', 'Chain_Structure_Act', 'Chain_ShortName'});
+if strcmp(usr_writemode, 'edit')
+  ResTab_NameTrans = readtable(namestablepath, 'Delimiter', ';');
+end
 I = 1:length(Robots);
 % Debug: Auswahl eines bestimmten Roboters
-% I = find(strcmp(Robots, 'P4PRRRR6V1G2P1A1'))';
+% I = find(strcmp(Robots, 'P4RRRRR8V2G1P1A1'))';
 for i = I
   RobName = Robots{i};
   fprintf('Bestimme Bezeichnung für Rob %d/%d (%s)\n', i, length(Robots), RobName);
@@ -51,12 +56,22 @@ for i = I
   II_Robi = find(strcmp(ResTab.Name, RobName));
   j = II_Robi(1); % Lade das erste (geht nur um den Roboter selbst)
 
+  % Prüfe, ob Roboter schon in Tabelle ist
+  if strcmp(usr_updatemode, 'skip') && any(strcmp(ResTab_NameTrans.PKM_Name, RobName))
+    fprintf('Roboter %s steht schon in Namenstabelle. Überspringe.\n', RobName);
+    continue;
+  end
   %% Lade Ergebnis und Roboter
   OptName = ResTab.OptName{j};
   LfdNr = ResTab.LfdNr(j);
   setfile = dir(fullfile(resdirtotal, OptName, '*settings.mat'));
   d1 = load(fullfile(resdirtotal, OptName, setfile(1).name));
   Set = cds_settings_update(d1.Set);
+  % Ergebnisse wurden ohne die Beschränkung auf symmetrische Schubzylinder
+  % generiert. Daher Option hier deaktivieren.
+  % if ~isfield(d1.Set.optimization, 'joint_limits_symmetric_prismatic')
+  %   Set.optimization.joint_limits_symmetric_prismatic = false;
+  % end
   resfile = fullfile(resdirtotal, OptName, ...
     sprintf('Rob%d_%s_Endergebnis.mat', LfdNr, RobName));
   tmp = load(resfile);
@@ -74,8 +89,11 @@ for i = I
   [R, Structure] = cds_dimsynth_robot(Set, d1.Traj, d1.Structures{LfdNr}, true);
   %% Ausprobieren verschiedener Parameter
   for k = 1:size(tmp.RobotOptRes.p_val_pareto,1)
+  % Anpassung für Programm-Aktualisierung seit Generierung der Ergebnisse
+  p_val_corr_k = cds_parameters_update(tmp.RobotOptRes.Structure, ...
+    Structure, tmp.RobotOptRes.p_val_pareto(k,:)');
   % Parameter des Ergebnisses eintragen (für fkine-Berechnung unten)
-  cds_update_robot_parameters(R, Set, Structure, tmp.RobotOptRes.p_val_pareto(k,:)');
+  cds_update_robot_parameters(R, Set, Structure, p_val_corr_k);
   % Gelenkwinkel des Startwerts für IK eintragen
   q0 = tmp.RobotOptRes.q0_pareto(k,:)';
   for kk = 1:R.NLEG
@@ -95,6 +113,7 @@ for i = I
   % Sicherheit trotzdem gemacht.
   Structure_tmp.q0_traj = q0;
   Set.optimization.objective = {'condition'};
+  Set.optimization.obj_limit(:) = 1e3; % schnelleres Ergebnis
   Set.optimization.constraint_obj(:) = 0;
   % Entferne Nebenbedingungen, die eine Lösung erschweren. Aufgrund
   % numerischer Unterschiede lässt sich das Ergebnis sonst evtl nicht
@@ -112,8 +131,10 @@ for i = I
   % Keine Eingabe von Ergebnissen von Entwufsoptimierung.
   % Schubgelenk-Offsets hier neu berechnen (falls Konfiguration umklappt)
   for repro_retry_iter = 1:2 % TODO: Muss eigentlich direkt funktionieren. Warum nicht beim ersten Mal?
-    [fval_i_test, ~, Q] = cds_fitness(R, Set,d1.Traj, ...
-      Structure_tmp, tmp.RobotOptRes.p_val, tmp.RobotOptRes.desopt_pval);
+    p_val_corr = cds_parameters_update(tmp.RobotOptRes.Structure, ...
+      Structure, tmp.RobotOptRes.p_val);
+    [fval_i_test, ~, Q] = cds_fitness(R, Set, d1.Traj, ...
+      Structure_tmp, p_val_corr, tmp.RobotOptRes.desopt_pval);
     if any(fval_i_test > 1e3)
       % Eigentlich darf dieser Fall nicht vorkommen. Ist aber aus numerischen
       % Gründen leider doch manchmal möglich.
@@ -200,18 +221,30 @@ for i = I
   end
   pgroups = pgroups_all(1,:);
 
+  % Debug: Visuell Prüfen, ob berechnete Parallelität stimmt.
+  % Set.general.plot_robot_in_fitness = -1e3;
+  % cds_fitness_debug_plot_robot(R, Q(1,:)', [], d1.Traj, Set, Structure_tmp, p_val_corr, inf, '');
+
   %% Zeichenkette generieren. Siehe Kong/Gosselin 2007, S.10
   % Variablen mit Latex-Code für Roboter-Namen
   Chain_StructName = '';
   Chain_StructNameAct = '';
-  
+  % Setze die Nummer 0 für Gelenke, die zu keiner parallelen Gruppe gehören
   groupidx = 0;
   for j = 1:NLegJ
-    if ~any(pgroups(1:j-1) == pgroups(j)) && sum(pgroups == pgroups(j)) ~= 1
-      % Diese Gruppe hat bei diesem Gelenk ihr erstes Vorkommnis
-      groupidx = groupidx + 1; % hochzählen
-    end
     if sum(pgroups == pgroups(j)) == 1
+      pgroups(j) = 0; % Dadurch dann kein Akzent auf dem Buchstaben
+    end
+  end
+  % Entferne nicht belegte Nummern
+  for j = 1:max(pgroups)
+    if ~any(pgroups==j) % reduziere alle folgenden Nummern um 1
+      pgroups(pgroups>j) = pgroups(pgroups>j) - 1;
+    end
+  end
+  for j = 1:NLegJ
+    groupidx = pgroups(j); % hochzählen
+    if groupidx == 0
       % diese Gelenkausrichtung gibt es nur einmal. Es muss kein
       % Gruppensymbol darüber gelegt werden
       newsymbol = '{';
@@ -236,11 +269,15 @@ for i = I
   % In Tabelle speichern
   Gnum = d1.Structures{LfdNr}.Coupling(1);
   Pnum = d1.Structures{LfdNr}.Coupling(2);
+  I_found = strcmp(ResTab_NameTrans.PKM_Name, RobName);
   Row_i = {RobName, Gnum, Pnum, Chain_Name, Chain_StructName, Chain_StructNameAct, SName_TechJoint};
-  ResTab_NameTrans = [ResTab_NameTrans; Row_i]; %#ok<AGROW>
+  if any(I_found) % eintragen
+    ResTab_NameTrans(I_found,:) = Row_i;
+  else % anhängen
+    ResTab_NameTrans = [ResTab_NameTrans; Row_i]; %#ok<AGROW>
+  end
 end
 
 %% Speichere das wieder ab
-namestablepath = fullfile(datadir, 'robot_names_latex.csv');
 writetable(ResTab_NameTrans, namestablepath, 'Delimiter', ';');
 fprintf('Tabelle %s geschrieben\n', namestablepath);

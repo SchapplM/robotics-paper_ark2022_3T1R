@@ -17,12 +17,19 @@
 clc
 clear
 close all
+
+usr_mode = 'presentation'; % Kein Paper-Bilder als Format vorgesehen
+% Für Auswertung von 3T0R-/3T1R-Vergleich mit Schubgelenken: only3, only4
+% (sonst zu viele Roboter in Legende)
+usr_selection = ''; % only3, only4 oder leer lassen
 %% Initialisierung
 this_dir = fileparts(which('eval_figures_pareto_groups.m'));
 addpath(fullfile(this_dir, '..'));
 % Mögliche Zielkriterien: condition, actforce, jointrange, energy
-ps = 1; % muss konsistent zu eval_figure_pareto sein
+ps = 2; % muss konsistent zu eval_figure_pareto sein
+
 if ps ==  1, pareto_settings = {'chainlength', 'condition'}; end
+if ps ==  2, pareto_settings = {'actforce', 'mass'}; end
 
 resdirtotal = ark2022_3T1R_dimsynth_data_dir();
 outputdir =this_dir;
@@ -64,7 +71,7 @@ I_iO = ResTab_ges.Fval_Opt < 1e3;
 % Betrachte nur Optimierungsläufe mit passender Zielfunktion
 I_objmatch = contains(ResTab_ges.Zielfunktion,pareto_settings{1}) & ...
              contains(ResTab_ges.Zielfunktion,pareto_settings{2});
-change_current_figure(10);clf; hold all;
+fighdl = change_current_figure(10);clf; hold all;
 leghdl = [];
 legstr = {};
 countrob = 0;
@@ -89,6 +96,13 @@ for i = 1:size(RobotGroups,1)
   end
   II_Robi = find(I_iO&I_objmatch&I_groupmatch);
   if isempty(II_Robi)
+    continue
+  end
+  % Vergleich 3- und 4-FG-PKM: Jeweils nur ein Diagramm
+  if GroupName(2) ~= '3' && strcmp(usr_selection, 'only3')
+    continue
+  end
+  if GroupName(2) ~= '4' && strcmp(usr_selection, 'only4')
     continue
   end
   fprintf('Gruppe %d/%d (%s): Lade Daten (%d i.O.-Optimierungs-Läufe)\n', i, ...
@@ -257,6 +271,10 @@ for i = 1:size(RobotGroups,1)
     assert(size(physval_pareto,1)==size(fval_pareto,1), 'Falsche Dimension');
     assert(size(physval_pareto,1)==size(fval_pareto,1), 'Falsche Dimension');
     pf_data = [pf_data; physval_pareto(:,[kk1,kk2])]; %#ok<AGROW>
+    % Reduziere Daten, die über den geplanten Plot-Bereich hinausgehen
+    if ps == 2
+      pf_data = pf_data(pf_data(:,1)<1e3,:); % Antriebskraft < x N
+    end
     row_i = cell(size(physval_pareto,1),6);
     row_i(:,1:3) = repmat({OptName,RobName,LfdNr},size(row_i,1),1);
     for k = 1:size(p_val_pareto,1)
@@ -309,12 +327,16 @@ for i = 1:size(RobotGroups,1)
   % Zahlen beziehen sich auf die Werte vor der Einheitenkorrektur (deg, µm)
   if ps == 1
     maxgaplength_x = 0.5; % bezogen auf x-Achse, in m. TODO!
+  elseif ps == 2
+    maxgaplength_x = 1; % Antriebskraft, N oder Nm
   else
     error('Value for ps not set yet');
   end
   xminmax = minmax2(pf_data(:,1)');
   if ps == 1
     dx = 5e-3; % Prüfe in 5mm-Schritten. TODO!
+  elseif ps == 2
+    dx = 0.100; % Prüfe Antriebskraft in 0.1N-Schritten
   else
     error('Value for ps not set yet');
   end
@@ -340,6 +362,8 @@ for i = 1:size(RobotGroups,1)
   % Zahlen beziehen sich auf die Werte vor der Einheitenkorrektur (deg, µm)
   if ps == 1
     minmarkerdist = [0.3,5]; % je größer der Wert desto enger die Marker. TODO
+  elseif ps == 2
+    minmarkerdist = [1,1];
   else
     error('Value for ps not set yet');
   end
@@ -364,13 +388,26 @@ for i = 1:size(RobotGroups,1)
   if all(isnan(gapdata_y)) % Alle Werte sind einzeln, keine Linie zu zeichnen
     linestyle = '';
   else % TODO: Hier kann noch eine andere Strichelung genommen werden
-    linestyle = '-';
+    if ps == 2 && GroupName(2)=='4' % Anzahl Beinketten, zur Abgrenzung gegen 3T0R
+      linestyle = '--'; % Nur für Vergleichsstudie bei 3T0R vs 3T1R
+    else
+      linestyle = '-';
+    end
   end
   [obj_units, objscale] = cds_objective_plotdetails(Set_j);
-  obj_units{strcmp(Set_j.optimization.objective, 'chainlength')} = 'm';
-  objscale(strcmp(Set_j.optimization.objective, 'chainlength')) = 1;
+  if any(strcmp(Set_j.optimization.objective, 'chainlength'))
+    obj_units{strcmp(Set_j.optimization.objective, 'chainlength')} = 'm';
+    objscale(strcmp(Set_j.optimization.objective, 'chainlength')) = 1;
+  end
   % Zeichne durchgezogene Linie
-  plot(objscale(1)*pf_plotdata(:,1), objscale(2)*pf_plotdata(:,2), [color,linestyle]);
+  % Entferne dafür aufeinanderfolgende NaN, damit Datensatz klein bleibt
+  if size(pf_plotdata,1) > 10
+    I_lrNaN = [false; isnan(pf_plotdata(1:end-2,2)) & isnan(pf_plotdata(3:end,2)); false];
+    pf_plotdata2 = pf_plotdata(~I_lrNaN,:);
+  else
+    pf_plotdata2 = pf_plotdata;
+  end
+  plot(objscale(1)*pf_plotdata2(:,1), objscale(2)*pf_plotdata2(:,2), [color,linestyle]);
   % Zeichne Marker
   plot(objscale(1)*pf_plotdata(I_pm,1), objscale(2)*pf_plotdata(I_pm,2), [color,marker]);
   % Dummy-Handle für Legende
@@ -381,12 +418,14 @@ for i = 1:size(RobotGroups,1)
   leghdl(countrob) = hdl; %#ok<SAGROW>
   legstr{countrob} = sprintf('%s; %d Wdh.', GroupName, numrep_i); %#ok<SAGROW>
 end
-set(10, 'numbertitle', 'off');
+set(fighdl, 'numbertitle', 'off');
 title(sprintf('Pareto-Front %s vs %s (Fitness-Werte physikalisch)', pareto_settings{1}, pareto_settings{2}));
 lh = legend(leghdl, legstr);
-set(10, 'name', sprintf('pareto_groups_%s_%s', pareto_settings{1}(1:4), pareto_settings{2}(1:4)));
-saveas(10, fullfile(outputdir, sprintf('figure_pareto_groups_%s_%s.fig', pareto_settings{1}, pareto_settings{2})));
-export_fig(10, fullfile(outputdir, sprintf('figure_pareto_groups_%s_%s.pdf', pareto_settings{1}, pareto_settings{2})));
+set(fighdl, 'name', sprintf('pareto_groups_%s_%s_%s', usr_selection, pareto_settings{1}(1:4), pareto_settings{2}(1:4)));
+saveas(fighdl, fullfile(outputdir, sprintf('figure_%s_pareto_groups_%s_%s.fig', ...
+  usr_selection, pareto_settings{1}, pareto_settings{2})));
+export_fig(fighdl, fullfile(outputdir, sprintf('figure_%s_pareto_groups_%s_%s.pdf', ...
+  usr_selection, pareto_settings{1}, pareto_settings{2})));
 
 %% Gruppen abspeichern
 save(fullfile(datadir, 'robot_groups.mat'), 'RobotGroups');
@@ -430,7 +469,8 @@ for i = 1:length(legstr)
       % Suche Latex-Namen
       for k = 1:length(RobotGroups{j,2})
         I_k = strcmp(ResTab_NameTrans.PKM_Name, RobotGroups{j,2}{k});
-        legstr2{i} = sprintf('%d: 4-%s (%s)', i, ResTab_NameTrans.Chain_Structure_Act{I_k}, ...
+        LegNumStr = RobotGroups{j,2}{k}(2);
+        legstr2{i} = sprintf('%d: %s-%s (%s)', i, LegNumStr, ResTab_NameTrans.Chain_Structure_Act{I_k}, ...
           ResTab_NameTrans.Chain_ShortName{I_k});
         break;
       end
@@ -444,11 +484,19 @@ end
 
 if ps == 1
   xlabel('Sum of leg chain lengths in m');
+elseif ps == 2
+  if all(contains(Robots, 'RRRRR'))
+    xlabel('Actuator force in Nm');
+  else % Studie mit Schubgelenk. Also auch Antrieb mit P-Gelenk
+    xlabel('Actuator force in N');
+  end
 else
   error('Value for ps not set yet');
 end
 if ps == 1
   ylabel('Jacobian condition number');
+elseif ps == 2
+  ylabel('Robot mass in kg');
 else
   error('Value for ps not set yet');
 end
@@ -457,21 +505,34 @@ title('');
 if ps == 1 % Manuell einstellen
 %   axis auto
   set(gca, 'yscale', 'log');
-  xlim([8, 22]);
-  ylim([3, 1e4]);
+  xlim([6.8, 22]);
+  ylim([2, 1e4]);
+elseif ps == 2
+  if all(contains(Robots, 'RRRRR'))
+    % study of robots with only R joints
+    xlim([4.7 100]);
+    ylim([9 20]);
+  else
+    % study of robots with one P joint
+    xlim([3 290]);
+    ylim([6 22]);
+  end
 else
   error('Value for ps not set yet');
 end
 grid on
 figure_format_publication(gca);
-set_size_plot_subplot(10, ...
-  11.6,4.5,gca,...
-  0.08,0.005,0.04,0.10,0,0)
-
+if strcmp(usr_mode, 'paper')
+  error('Fall nicht definiert');
+else % presentation
+  set_size_plot_subplot(fighdl, ...
+    16,9,gca,...
+    0.08,0.005,0.04,0.10,0,0);
+end
 lh = legend(leghdl, legstr2, 'interpreter', 'latex');
 % Move legend manually and obtain position by `get(lh, 'position')`. Then
 % set these values below
-set(lh, 'Position', [0.6330    0.1417    0.3472    0.7882]);
+set(lh, 'Position', [0.6499    0.0394    0.3402    0.9314]);
 
 % Ziehe die x-Beschriftung etwas nach oben und entferne dort die Ticklabel
 xtl = get(gca, 'xticklabel');
@@ -482,18 +543,27 @@ xlhdl = get(gca, 'xlabel');
 [Y_off, Y_slope] = get_relative_position_in_axes(gca, 'y');
 xlpos = get(xlhdl, 'Position');
 if ps == 1
-  xlpos(1) = X_off+X_slope*(-0.4);
+  xlpos(1) = X_off+X_slope*(-0.2);
+elseif ps == 2
+  xlpos(1) = X_off+X_slope*(-0.2);
 else
   error('Value for ps not set yet');
 end
-xlpos(2) = Y_off*Y_slope^(-1/2+0.5-0.02);
+if ps == 1
+  xlpos(2) = Y_off*Y_slope^(-1/2+0.5-0.02);
+end
 set(xlhdl, 'Position', xlpos);
 
 % Speichern und Abschluss
-name = sprintf('paperfigure_pareto_groups_%s_%s', pareto_settings{1}, pareto_settings{2});
-saveas(10, fullfile(outputdir, sprintf('%s.fig', name)));
-export_fig(10, fullfile(outputdir, sprintf('%s.pdf', name)));
-export_fig(10, fullfile(paperfigdir, 'pareto_all.pdf'));
+name = sprintf('%sfigure_%s_pareto_groups_%s_%s', usr_mode, usr_selection, pareto_settings{1}, pareto_settings{2});
+saveas(fighdl, fullfile(outputdir, sprintf('%s.fig', name)));
+export_fig(fighdl, fullfile(outputdir, sprintf('%s.pdf', name)));
+if strcmp(usr_mode, 'presentation')
+  exportgraphics(fighdl, fullfile(outputdir, sprintf('%s.png', name)), 'Resolution','800');
+else
+  export_fig(fighdl, fullfile(paperfigdir, 'pareto_all.pdf'));
+end
+
 fprintf('Auswertung %s gespeichert\n', name);
 % Vergrößerung zusätzlich speichern. In einem Bereich ist es zu
 % teilweise zu unübersichtlich (nicht mehr genutzt).
@@ -506,12 +576,12 @@ if ps == 11
 else
   error('Value for ps not set yet');
 end
-set_size_plot_subplot(10, ...
+set_size_plot_subplot(fighdl, ...
   4,4,gca,...
   0.10,0.02,0.02,0.12,0,0)
 name = sprintf('paperfigure_pareto_groups_%s_%s_detail', pareto_settings{1}, pareto_settings{2});
-saveas(10, fullfile(outputdir, sprintf('%s.fig', name)));
-export_fig(10, fullfile(outputdir, sprintf('%s.pdf', name)));
-export_fig(10, fullfile(paperfigdir, 'pareto_all_detail.pdf'));
+saveas(fighdl, fullfile(outputdir, sprintf('%s.fig', name)));
+export_fig(fighdl, fullfile(outputdir, sprintf('%s.pdf', name)));
+export_fig(fighdl, fullfile(paperfigdir, 'pareto_all_detail.pdf'));
 
 

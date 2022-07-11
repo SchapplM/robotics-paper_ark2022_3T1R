@@ -3,7 +3,7 @@
 
 Author: Moritz Schappler
 
-This code is supplemental material to the following submission to the [ARK Conference 2022](https://ark2022.com/):
+This code is supplemental material to the following publication at the [ARK Conference 2022](https://ark2022.com/):
 
 ```bib
 @InProceedings{Schappler2022,
@@ -12,6 +12,7 @@ This code is supplemental material to the following submission to the [ARK Confe
   title        = {Inverse Kinematics for Task Redundancy of Symmetric 3T1R Parallel Manipulators using Tait-Bryan-Angle Kinematic Constraints},
   organization = {Springer},
   year         = {2022},
+  doi          = {10.1007/978-3-031-08140-8_22},
 }
 ```
 <p align="middle">
@@ -35,6 +36,13 @@ Each section of the paper can be reproduced by a Matlab script.
   * See next section of this document
 * The figures are created using InkScape with Latex export option
 
+
+## Structural Synthesis
+
+The structural synthesis for the parallel robots does not have to be performed again, since the results are already stored in the parallel robot database.
+To reproduce the video animations from the conference presentation with small motion of the platform, the following script can be used: `dimsynth/structsynth_3T1R_example.m`.
+
+
 ## Dimensional Synthesis
   
 1. To reproduce the results, first the dimensional synthesis has to be performed by running the Matlab script `dimsynth/dimsynth_3T1R_example.m`.
@@ -49,7 +57,7 @@ Each section of the paper can be reproduced by a Matlab script.
     * `robot_images.m`: Creates one image file for each robot. These are taken in `paper/figures/robots.svg` to create **Fig. 3,a of the paper**.
     * Two redundancy maps are assembled in `paper/figures/perfmap_1x2.svgz` for **Fig. 3,b of the paper**.
 
-The steps 2 to 3 can be performed after each iteration of the dimensional synthesis by using `run_evaluation.m` in the paper repo's root directory.
+The steps 2 to 3 can be performed after each iteration of the dimensional synthesis by using `run_evaluation_ark3T1R.m` in the paper repo's root directory.
 
 ## Prerequisites <a name="prerequisites">
 
@@ -69,19 +77,19 @@ For the Matlab scripts to work, the following steps have to be performed:
     * [Toolbox for symbolic robot model generation](https://github.com/SchapplM/robsynth-modelgen) (tested with rev. fd37713; 2022-01-20)
     * [Toolbox for transferring jobs to a computing cluster](https://github.com/SchapplM/matlab_pbs_transfer) (tested with rev. 2a99eae; 2022-01-30)
     * [Dimensional synthesis toolbox](https://github.com/SchapplM/robsynth-structdimsynth) (tested with rev. 2c8085a; 2022-02-01)
-    * Update the repositories to the given versions. If the master branch is on an older version, change of branch is required. You should first try the more recent version before downgrading to the given versions. It should still work.
+    * Update the repositories to the given versions. You should first try the more recent version before downgrading to the given versions. It should still work.
     * Short command to download all repositories (run in Git Bash in Windows or in Linux terminal):
       ```Bash
-      git clone git@github.com:SchapplM/robotics-dep-geometry.git -b dev
-      git clone git@github.com:SchapplM/robotics-dep-traj.git -b dev
-      git clone git@github.com:SchapplM/robotics-dep-ext.git -b dev
-      git clone git@github.com:SchapplM/matlab_toolbox.git -b dev
-      git clone git@github.com:SchapplM/robotics-toolbox.git -b dev
-      git clone git@github.com:SchapplM/robsynth-serroblib.git -b dev
-      git clone git@github.com:SchapplM/robsynth-parroblib.git -b dev
-      git clone git@github.com:SchapplM/robsynth-modelgen.git -b dev
-      git clone git@github.com:SchapplM/matlab_pbs_transfer.git -b master
-      git clone git@github.com:SchapplM/robsynth-structdimsynth.git -b dev
+      git clone git@github.com:SchapplM/robotics-dep-geometry.git
+      git clone git@github.com:SchapplM/robotics-dep-traj.git
+      git clone git@github.com:SchapplM/robotics-dep-ext.git
+      git clone git@github.com:SchapplM/matlab_toolbox.git
+      git clone git@github.com:SchapplM/robotics-toolbox.git
+      git clone git@github.com:SchapplM/robsynth-serroblib.git
+      git clone git@github.com:SchapplM/robsynth-parroblib.git
+      git clone git@github.com:SchapplM/robsynth-modelgen.git
+      git clone git@github.com:SchapplM/matlab_pbs_transfer.git
+      git clone git@github.com:SchapplM/robsynth-structdimsynth.git
       ```
 5. Set up the toolboxes by modifying the following files according to the instructions in the respective README files
     * robsynth-serroblib/maplerepo_path.m.template (has to link to robsynth-modelgen)

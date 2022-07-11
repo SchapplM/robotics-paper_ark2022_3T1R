@@ -7,8 +7,9 @@ clear
 clc
 % User Settings for this file
 usr_cluster = true; % if a computing cluster is configured.
-
+nreps = 5;
 %% Optimierung aller Roboter für alle Aufgabentypen starten
+for i_rep = 1:nreps
 % Einstellungen der Optimierung
 Set = cds_settings_defaults(struct('DoF', logical([1 1 1 0 0 0])));
 Set.general.verbosity = 4;
@@ -63,6 +64,11 @@ Set.general.animation_styles = {'3D'};
 Set.general.save_animation_file_extensions = {'mp4'};
 Set.general.eval_figures = {'pareto_all_phys'};
 Set.general.noprogressfigure = true;
+
+% Debug: Dynamische Programmierung ausprobieren
+% Set.general.taskred_dynprog = true;
+% Set.general.debug_taskred_perfmap = 1;
+% Set.optimization.obj_limit = [1e3;1e3;1e3];
 
 % Debug: auch singuläre PKM zulassen
 % Set.optimization.condition_limit_sing = inf;
@@ -122,6 +128,13 @@ Set.task.installspace.links(2) = {0};  % Alle bewegten Teile des Roboters müsse
 % cds_show_task(Traj, Set)
 % return
 
+% Nicht-symmetrische Länge der Schubzylinder ermöglicht mehr Lösungen, aber
+% dafür unplausibler. daher symmetrisch wählen.
+Set.optimization.joint_limits_symmetric_prismatic = true;
+
+% Benutze den Index aller Ergebnisse zum schnelleren Start
+Set.optimization.InitPopFromGlobalIndex = true;
+
 % Debug: Nur einen Roboter erzeugen
 % Set.structures.whitelist = {'P4RRRRR5V1G1P1A1'};
 
@@ -138,7 +151,10 @@ if Set.general.computing_cluster && length(Set.structures.whitelist) == 1
   warning('Es soll nur ein Roboter auf dem Cluster berechnet werden. Sicher?');
   pause(5); % Bedenkzeit
 end
-Set.optimization.optname = sprintf('ARK_3T1R_20220131_full');
+Set.optimization.optname = sprintf('ARK_3T1R_20220608');
+if nreps > 1
+  Set.optimization.optname = [Set.optimization.optname, sprintf('_rep%d', i_rep)];
+end
 
 % Debug: Abgebrochenen Durchlauf abschließen
 Set.general.only_finish_aborted = false;
@@ -146,3 +162,7 @@ Set.general.only_finish_aborted = false;
 % werden sollen
 Set.general.regenerate_summary_only = false; 
 cds_start(Set,Traj);
+if nreps > 1 && i_rep < nreps
+  pause(4);
+end
+end

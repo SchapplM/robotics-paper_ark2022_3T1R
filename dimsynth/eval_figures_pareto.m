@@ -1,6 +1,8 @@
 % Assemble the Pareto fronts for multiple robots. This script is able to
 % use results from several independent run of the dimensional synthesis.
 % In the synthesis toolbox the Pareto diagram is only created for one run.
+% 
+% This script creates the Pareto diagrams from the conference presentation.
 %
 % Preliminaries:
 % * run dimensional synthesis with dimsynth_3T1R_example.m
@@ -30,15 +32,25 @@ if isempty(which('ark2022_3T1R_dimsynth_data_dir'))
 end
 resdirtotal = ark2022_3T1R_dimsynth_data_dir();
 
-ps = 1; % Auch andere Kombinationen von Kriterien möglich
+% Auswertung: 1 für erste Vergleichsstudie in Präsi, 2 für zweite.
+ps = 2; % Auch andere Kombinationen von Kriterien möglich
 % Mögliche Zielkriterien: condition, actforce, jointrange, energy
 if ps ==  1, pareto_settings = {'chainlength', 'condition'}; end
-
+if ps ==  2, pareto_settings = {'actforce', 'mass'}; end
 %% Auswahl der Ergebnisse und Ergebnisse durchgehen
 % Namensschema: Siehe dimsynth/config_pareto.m
 % Ergebnis-Ordner müssen im Datenverzeichnis liegen (entweder Offline-Aus-
 % wertung oder neue Maßsynthese).
-resdirs = {'ARK_3T1R_20220131_full'};
+% Auswertung für publizierte Version
+% resdirs = {'ARK_3T1R_20220131_full'};
+% Aktuellere Auswertungen mit Korrekturen (erstes Vergleichsbild in Präsi)
+% resdirs = cell(1,5);
+% for i = 1:5
+%   resdirs{i} = sprintf('ARK_3T1R_20220610_full_rep%d', i);
+% end
+% Vergleich von 3T0R und 3T1R (letzte Folie in Präsi)
+resdirs = {'ARK_3T1R_compare_3T0R_20220622_v2onlyR'};
+
 for i = 1:length(resdirs)
   tablepath = fullfile(resdirtotal, resdirs{i}, sprintf('%s_results_table.csv', resdirs{i}));
   % Finde die Zielfunktionen heraus (Auslesen der ersten Einstellungsdatei
@@ -70,13 +82,15 @@ for i = 1:length(resdirs)
     ResTab_ges = [ResTab_ges; ResTab_i(I_select,:)]; %#ok<AGROW>
   end
 end
+
+Robots = unique(ResTab_ges.Name);
+
 writetable(ResTab_ges, fullfile(datadir, 'results_all_reps_pareto.csv'), ...
   'Delimiter', ';');
 save(fullfile(datadir, 'results_all_reps_pareto.mat'), 'ResTab_ges');
 %% Alle Roboter einzeln durchgehen
 markerlist = {'x', 's', 'v', '^', '*', 'o', 'h', 'p'};
 colorlist =  {'r', 'g', 'b', 'c', 'm', 'k', 'y'};
-Robots = unique(ResTab_ges.Name);
 
 I_robleg = false(length(Robots), 1);
 % Betrachte nur Optimierungsläufe mit i.O.-Ergebnis
@@ -118,8 +132,11 @@ for i = 1:length(Robots)
     OptName = ResTab_ges.OptName{II_Robi(j)};
     LfdNr = ResTab_ges.LfdNr(II_Robi(j));
     resfile = fullfile(resdirtotal, OptName, sprintf('Rob%d_%s_Endergebnis.mat', LfdNr, RobName));
+    setfile = fullfile(resdirtotal, OptName, sprintf('%s_settings.mat', OptName));
     tmp = load(resfile);
     RobotOptRes_j = tmp.RobotOptRes;
+    tmp = load(setfile);
+    Set_i = tmp.Set;
     kk1 = find(strcmp(Set_i.optimization.objective, pareto_settings{1}));
     kk2 = find(strcmp(Set_i.optimization.objective, pareto_settings{2}));
     % Wähle nur Durchläufe, bei denen nur die gewählten Kriterien für
@@ -197,6 +214,9 @@ for i = 1:length(Robots)
     leghdl(countrob,:) = hdl; %#ok<SAGROW>
     legstr{countrob} = sprintf('%d/%d (%s); %d Wdh.', i, length(Robots), Robots{i}, numrep_i); %#ok<SAGROW>
   end
+end
+if isempty(leghdl)
+  error('Nichts gezeichnet. Daten unpassend');
 end
 for jj = 1:2
   change_current_figure(10*ps+jj);

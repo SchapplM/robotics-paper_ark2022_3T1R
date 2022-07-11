@@ -161,8 +161,9 @@ for i = 1:size(RobotGroups,1)
     R_test = parroblib_create_robot_class(RobName, 1, 1);
     R_test.fill_fcn_handles(true, true); % Zur Kompilierung fehlender Funktionen zum Nachrechnen der Fitness-Funktion
   end
-
   [R, Structure] = cds_dimsynth_robot(Set_i, d1.Traj, d1.Structures{LfdNr}, true);
+  pval = cds_parameters_update(tmp.RobotOptRes.Structure, ...
+    Structure, pval); % Aktualisiere die Parameter (neue Programmversion)
   % Fitness-Funktion neu definieren (mit weniger Log-Ausgaben)
   Set = Set_i;
   kk1 = strcmp(Set.optimization.objective,'chainlength');
